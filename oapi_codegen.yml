@@ -1,0 +1,39 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  x-go-package: "github.com/oapi-codegen/runtime"
+  title: Oapi Codegen Golang Fiber
+  license:
+    name: MIT
+  x-oapi-codegen-middlewares:
+    - Middleware
+
+servers:
+  - url: http://localhost
+paths:
+  /api/v1.0/check:
+    get:
+      summary: Check
+      operationId: check
+      responses:
+        '200':
+          description: Health check
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalResponses'
+components:
+  schemas:
+    GlobalResponses:
+      type: object
+      x-go-type-skip-optional-pointer: true
+      required: 
+        - responseCode
+        - responseMessage
+      properties:
+        responseCode:
+          type: string
+          x-go-type-skip-optional-pointer: true
+        responseMessage:
+          type: string
+          x-go-type-skip-optional-pointer: true
