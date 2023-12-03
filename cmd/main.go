@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"oapi-codegen-fiber/api"
 	"oapi-codegen-fiber/bootstrap"
 	"oapi-codegen-fiber/cmd/handlers"
@@ -14,7 +15,7 @@ func main() {
 	f.Static("/swagger", "cmd")
 
 	app := bootstrap.NewInitializeBootsrap()
-	f.Group("/api/v1.0")
+	f.Group(fmt.Sprintf("/api/%s", app.Env.AppVersion))
 
 	serve := handlers.NewServiceInitial(app)
 	checkController := serve.CheckHandler()
@@ -23,5 +24,5 @@ func main() {
 	}
 
 	api.RegisterHandlers(f, wrapper)
-	f.Listen(":3000")
+	f.Listen(app.Env.AppPort)
 }
